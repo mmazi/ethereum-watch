@@ -1,0 +1,14 @@
+{
+  "name": "ethereum-watch",
+  "version": "0.0.1",
+  "description": "Watch Etheruem Blockchain",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Krmpotic",
+  "license": "ISC",
+  "dependencies": {
+    "web3": "^0.15.2"
+  }
+}
