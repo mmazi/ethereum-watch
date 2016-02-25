@@ -9,6 +9,7 @@
   "author": "David Krmpotic",
   "license": "ISC",
   "dependencies": {
-    "web3": "^0.15.2"
+    "web3": "^0.15.2",
+    "ethereum-bip44" : "^1.0.0"
   }
 }
