@@ -5,11 +5,14 @@ var ethereumjsUtil = require('ethereumjs-util');
  * Some of this code is copied from the ethereum-bip44 library, credit goes to them
  */
 
-exports.getAddress = function(key, childIndex) {
-  var derived = key.derive(childIndex);
-  var ethPubKey = bip32PublicToEthereumPublic(derived.publicKey.toBuffer());
+exports.getAddress = function(key) {
+  var ethPubKey = bip32PublicToEthereumPublic(key.publicKey.toBuffer());
   var address = ethereumjsUtil.pubToAddress(ethPubKey);
   return `0x${address.toString('hex')}`;
+};
+
+exports.getDerivedAddress = function(parent, childIndex) {
+  return exports.getAddress(parent.derive(childIndex));
 };
 
 function bip32PublicToEthereumPublic(pubKey) {
