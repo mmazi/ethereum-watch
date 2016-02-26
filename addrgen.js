@@ -10,6 +10,7 @@ console.log(userDepositsExtPub);
 var userDepositsExtPubKey = new bitcore.HDPublicKey(userDepositsExtPub);
 
 // Output some user addresses. The users can use these for deposits.
+// These addresses should be watched for incoming ETH.
 console.log(getDerivedAddress(userDepositsExtPubKey, 100000000));
 console.log(getDerivedAddress(userDepositsExtPubKey, 123456789));
 console.log(getDerivedAddress(userDepositsExtPubKey, 999999999));
