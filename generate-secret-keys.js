@@ -9,14 +9,27 @@ function writeSeed(keyDesc, key) {
   console.log("     public: " + key.hdPublicKey.toString());
 }
 
-function writeAccount(keyDesc, key) {
+function writeSeedDerived(keyDesc, m, account) {
+  writeSeed(keyDesc, deriveAccountExt(m, account));
+}
+
+function writeAccountAddress(keyDesc, m, account, addressIdx) {
+  var key = deriveAccountExtSub(m, account, addressIdx);
   console.log(keyDesc + ":");
   console.log("        key: " + key.privateKey.toString());
   console.log("    address: " + hdUtils.getAddress(key));
 }
 
-function derive(m, account, addressIdx) {
-  return m.derive("m/44'/60'/" + account + "'/0" + (addressIdx ? '/' + addressIdx : ''));
+function deriveAccountExt(master, account) {
+  var path = "m/44'/60'/" + account + "'/0";
+  console.log("Path: " + path);
+  return master.derive(path);
+}
+
+function deriveAccountExtSub(master, account, addressIdx) {
+  var path = "m/44'/60'/" + account + "'/0/" + addressIdx;
+  console.log("Path: " + path);
+  return master.derive(path);
 }
 
 // Hex seed (very secret):
@@ -24,8 +37,8 @@ var m = bitcore.HDPrivateKey.fromSeed('e16e395b7b6c8914903a216d09e470440ee685338
 
 writeSeed("Master", m);
 
-writeSeed("User deposits", derive(m, 0));
+writeSeedDerived("User deposits", m, 0);
 
-writeAccount("Hot wallet - user deposits forward address", derive(m, 1, 0));
-writeAccount("Hot wallet - refills from cold wallet", derive(m, 1, 1));
-writeAccount("Cold wallet", derive(m, 2, 0));
+writeAccountAddress("Hot wallet - user deposits forward address", m, 1, 0);
+writeAccountAddress("Hot wallet - refills from cold wallet", m, 1, 1);
+writeAccountAddress("Cold wallet", m, 2, 0);
